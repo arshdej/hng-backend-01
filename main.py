@@ -22,6 +22,9 @@ async def hello(request: Request, visitor_name: str):
             raise ValueError("Failed to get location data")
         city = ip_info.get("city", "unknown")
         
+        print(client_ip)
+        print(ip_info)
+        
         # Get weather information
         weather_response = requests.get(f"http://api.weatherapi.com/v1/current.json?key={WEATHER_API_KEY}&q={city}")
         weather_data = weather_response.json()
