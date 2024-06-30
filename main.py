@@ -23,14 +23,17 @@ async def hello(request: Request, visitor_name: str):
         city = ip_info.get("city", "unknown")
         
         print(client_ip)
-        print(ip_info)
+        print(city)
         
         # Get weather information
         weather_response = requests.get(f"http://api.weatherapi.com/v1/current.json?key={WEATHER_API_KEY}&q={city}")
         weather_data = weather_response.json()
+        
+        temperature = 32
         if "error" in weather_data:
             raise ValueError("Failed to get weather data")
-        temperature = weather_data["current"]["temp_c"]
+        else:
+            temperature = weather_data["current"]["temp_c"]
         
         greeting = f"Hello, {visitor_name}!, the temperature is {temperature} degrees Celcius in {city}"
         return JSONResponse(content={"client_ip": client_ip, "location": city, "greeting": greeting})
