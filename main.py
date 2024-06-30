@@ -33,6 +33,7 @@ async def hello(request: Request, visitor_name: str):
         if "error" in weather_data:
             raise ValueError("Failed to get weather data")
         else:
+            print(weather_data)
             temperature = weather_data["current"]["temp_c"]
         
         greeting = f"Hello, {visitor_name}!, the temperature is {temperature} degrees Celcius in {city}"
@@ -41,8 +42,10 @@ async def hello(request: Request, visitor_name: str):
     except requests.RequestException as e:
         raise HTTPException(status_code=503, detail="External API request failed")
     except ValueError as e:
+        print("Error: ", e)
         raise HTTPException(status_code=500, detail=str(e))
     except Exception as e:
+        print("Error: ", e)
         raise HTTPException(status_code=500, detail="An unexpected error occurred")
 
 
